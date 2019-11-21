@@ -14,6 +14,7 @@ using TFTB.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using TFTB.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using TFTB.Identity.Configuration;
 
 namespace TFTB.Identity
 {
@@ -45,6 +46,13 @@ namespace TFTB.Identity
                 options.Password.RequireLowercase = false;
             });
 
+            services.AddIdentityServer()
+                .AddInMemoryPersistedGrants()
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryClients(Config.GetClients())
+                .AddAspNetIdentity<User>();
+                
             services.AddControllers();
         }
 
@@ -55,6 +63,8 @@ namespace TFTB.Identity
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseIdentityServer();
 
             app.UseHttpsRedirection();
 
