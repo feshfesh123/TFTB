@@ -14,6 +14,7 @@ using TFTB.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using TFTB.Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using TFTB.Identity.Configuration;
 
 namespace TFTB.Identity
 {
@@ -46,6 +47,14 @@ namespace TFTB.Identity
             });
 
             services.AddControllers();
+
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryPersistedGrants()
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryClients(Config.GetClients())
+                .AddAspNetIdentity<User>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +64,8 @@ namespace TFTB.Identity
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseIdentityServer();
 
             app.UseHttpsRedirection();
 

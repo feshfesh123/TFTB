@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TFTB.Identity.Models;
 using TFTB.Identity.ViewModels;
-using TFTB.Server.Shared;
 
 namespace TFTB.Identity.Controllers
 {
@@ -28,9 +27,9 @@ namespace TFTB.Identity.Controllers
             var result = await userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
-                return this.OkResult();
+                return Ok();
             else
-                return this.ErrorResult(1, "abc");
+                return BadRequest();
         }
     }
 }
