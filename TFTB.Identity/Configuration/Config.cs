@@ -13,7 +13,7 @@ namespace TFTB.Identity.Configuration
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
             };
         }
 
@@ -37,9 +37,8 @@ namespace TFTB.Identity.Configuration
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1", "openid", "profile" }
-                },
-                
+                    AllowedScopes = { "api1" }
+                }
             };
         }
     }
